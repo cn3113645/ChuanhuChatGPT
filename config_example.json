@@ -2,6 +2,7 @@
     "openai_api_key": "sk-xxxxxxxxxxxxxxxxxxxxxxxxx",
     "https_proxy": "http://127.0.0.1:1079",
     "http_proxy": "http://127.0.0.1:1079",
+    "api_url": "https://api.example.com/",
     "advanced_pdf_kwargs": {
         "two_column": true
     },

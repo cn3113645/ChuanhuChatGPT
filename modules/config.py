@@ -4,7 +4,7 @@ import logging
 import sys
 import json
 
-from .presets import BASE_API_URL, CONFIG_FILE_API_URL, CONFIG_FILE_PROXY_URL
+from .presets import BASE_API_URL
 from . import shared
 
 __all__ = [
@@ -15,7 +15,7 @@ __all__ = [
     "retrieve_proxy",
     "log_level",
     "my_api_url",
-    "my_proxy_url",
+    "my_proxy_url"
 ]
 
 # 添加一个统一的config文件，避免文件过多造成的疑惑（优先级最低）
@@ -86,6 +86,7 @@ logging.basicConfig(
 ## 处理代理：
 http_proxy = config.get("http_proxy", "")
 https_proxy = config.get("https_proxy", "")
+my_proxy_url = https_proxy or http_proxy
 http_proxy = os.environ.get("HTTP_PROXY", http_proxy)
 https_proxy = os.environ.get("HTTPS_PROXY", https_proxy)
 
@@ -97,7 +98,7 @@ os.environ["HTTPS_PROXY"] = ""
 def retrieve_proxy(proxy=None):
     """
     1, 如果proxy = NONE，设置环境变量，并返回最新设置的代理
-    2, 如果proxy ！= NONE，更新当前的代理配置，但是不更新环境变量
+    2, 如果proxy != NONE，更新当前的代理配置，但是不更新环境变量
     """
     global http_proxy, https_proxy
     if proxy is not None:
@@ -113,9 +114,6 @@ def retrieve_proxy(proxy=None):
         # return old proxy
         os.environ["HTTP_PROXY"], os.environ["HTTPS_PROXY"] = old_var
 
-# 处理 API url 和 API proxy url
-my_api_url = BASE_API_URL
-my_proxy_url = ""
 
 def change_api_url(url):
     shared.state.set_base_url(url)
@@ -130,32 +128,13 @@ def change_proxy(proxy):
     logging.info(msg)
     return msg
 
-## 判断代码中是否修改my_api_url & 读取配置文件中的API地址
-## 如果代码中修改过my_api_url，为了保证代码中填写值得优先级最高，不会再读取文件中的内容
-if my_api_url == BASE_API_URL and os.path.exists(CONFIG_FILE_API_URL):
-    with open(CONFIG_FILE_API_URL, mode="r", encoding="utf-8") as f:
-        api_url_from_file = f.readline().strip()
+# 处理 API url
+my_api_url = BASE_API_URL
+if (os.path.exists("api_url.txt") and os.path.getsize("api_url.txt")):
+    with open("api_url.txt", "r", encoding="utf-8") as f:
+        my_api_url = f.readline().strip()
+        change_api_url(my_api_url)
 
-    # 空值判断
-    if api_url_from_file:
-        my_api_url = api_url_from_file
-
-# 判断my_api_url是否变化，变化则修改自定义API URL
-if my_api_url != BASE_API_URL:
-    change_api_url(my_api_url)
-
-# 判断代码中是否修改my_proxy_url and 读取配置文件中的代理地址
-# 如果代码中修改过my_proxy_url，为了保证代码中填写值得优先级最高，不会再读取文件中的内容
-if (not my_proxy_url.strip()) and os.path.exists(CONFIG_FILE_PROXY_URL):
-    with open(CONFIG_FILE_PROXY_URL, mode="r", encoding="utf-8") as f:
-        proxy_url_from_file = f.readline().strip()
-    # 空值判断
-    if proxy_url_from_file:
-        my_proxy_url = proxy_url_from_file
-
-# 判断my_proxy_url是否填写，填写则修改自定义代理
-if my_proxy_url.strip():
-    change_proxy(my_proxy_url)
 
 ## 处理advance pdf
 advance_pdf = config.get("advance_pdf", {})
