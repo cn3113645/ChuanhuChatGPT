@@ -130,7 +130,17 @@ def change_proxy(proxy):
 
 # 处理 API url
 my_api_url = BASE_API_URL
-if (os.path.exists("api_url.txt") and os.path.getsize("api_url.txt")):
+if config.get("api_url","") != "":
+    my_api_url = config.get("api_url") 
+    change_api_url(my_api_url)
+if os.environ.get("my_api_url", my_api_url) != my_api_url:
+    my_api_url = os.environ.get("my_api_url")
+    change_api_url(my_api_url)
+if (
+    my_api_url != BASE_API_URL
+    and os.path.exists("api_url.txt") 
+    and os.path.getsize("api_url.txt")
+    ):
     with open("api_url.txt", "r", encoding="utf-8") as f:
         my_api_url = f.readline().strip()
         change_api_url(my_api_url)

@@ -87,24 +87,19 @@
 
 2. **填写API密钥**
 
-	以下3种方法任选其一：
+	以下2种方法任选其一：
 
 	<details><summary>1. 在图形界面中填写你的API密钥</summary>
 
 	这样设置的密钥会在页面刷新后被清除。
 
 	<img width="760" alt="image" src="https://user-images.githubusercontent.com/51039745/222873756-3858bb82-30b9-49bc-9019-36e378ee624d.png"></details>
-	<details><summary>2. 在直接代码中填入你的 OpenAI API 密钥（不推荐）</summary>
 
-	在 `modules/config.py` 中填入您的 API-Key，在这样设置的密钥会成为默认密钥。
+	<details><summary>2. 在文件中设定默认密钥、用户名密码以及更多设置（推荐）</summary>
 
-	<!-- 需要更换示例图片 --></details>
+	这样设置的密钥以及其他设置项可以在拉取项目更新之后保留。
 
-	<details><summary>3. 在文件中设定默认密钥、用户名密码（推荐）</summary>
-
-	这样设置的密钥可以在拉取项目更新之后保留。
-
-	参照 `config_example.json`，在项目文件夹中新建 `config.json`，在其中填入 API-Key、用户名密码（可选）等设置。用户名密码支持多用户。
+	参照 `config_example.json`，在项目文件夹中新建 `config.json`，在其中填入 API-Key、用户名密码（可选）、API host（可选）、代理地址（可选）等设置。用户名密码支持多用户。
 
 	```
 	{
@@ -116,7 +111,6 @@
 	```
 
 	* *原本在 `api_key.txt` 和 `auth.json` 中填写相关设置的方法仍然可用，但不再推荐。*
-
 
 	</details>
 
@@ -153,13 +147,8 @@
 	```
 
 	如果还是不行，请先[安装Python](https://www.runoob.com/python/python-install.html)。
+
 <br />
-
-5. **（可选）填写自定义的API地址和代理地址**
-
-	**这一步不是必须的。** 
-
-	您可以参照前文在图形界面的“高级”选项卡中填写自定义的API地址和代理地址（网页刷新后清除），或新建 `api_url.txt` 与 `proxy.txt` 分别填入您的API地址和代理地址。url 只需要填写到域名，例如：`https://yourdomain.com`。
 
 如果一切顺利，现在，你应该已经可以在浏览器地址栏中输入 [`http://localhost:7860`](http://localhost:7860) 查看并使用 ChuanhuChatGPT 了。
 
