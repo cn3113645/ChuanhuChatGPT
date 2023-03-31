@@ -4,9 +4,8 @@ import logging
 import sys
 import json
 
-from modules.presets import BASE_API_URL, CONFIG_FILE_API_URL, CONFIG_FILE_PROXY_URL
-from modules import shared
-# from modules.utils import change_api_url, change_proxy
+from .presets import BASE_API_URL, CONFIG_FILE_API_URL, CONFIG_FILE_PROXY_URL
+from . import shared
 
 __all__ = [
     "my_api_key",
@@ -110,7 +109,7 @@ def retrieve_proxy(proxy=None):
         os.environ["HTTP_PROXY"] = http_proxy
         os.environ["HTTPS_PROXY"] = https_proxy
         yield http_proxy, https_proxy # return new proxy
-        
+
         # return old proxy
         os.environ["HTTP_PROXY"], os.environ["HTTPS_PROXY"] = old_var
 

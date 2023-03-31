@@ -23,8 +23,8 @@ from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 
 from modules.presets import *
-import modules.shared as shared
-from modules.config import retrieve_proxy
+from . import shared
+from .config import retrieve_proxy
 
 if TYPE_CHECKING:
     from typing import TypedDict
@@ -332,20 +332,6 @@ def reset_default():
     retrieve_proxy("")
     return gr.update(value=newurl), gr.update(value=""), "API URL 和代理已重置"
 
-
-def change_api_url(url):
-    shared.state.set_base_url(url)
-    msg = f"API地址更改为了{url}"
-    logging.info(msg)
-    return msg
-
-
-def change_proxy(proxy):
-    retrieve_proxy(proxy)
-    os.environ["HTTPS_PROXY"] = proxy
-    msg = f"代理更改为了{proxy}"
-    logging.info(msg)
-    return msg
 
 
 def hide_middle_chars(s):

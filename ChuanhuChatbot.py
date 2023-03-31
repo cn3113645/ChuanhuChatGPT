@@ -10,6 +10,7 @@ from modules.utils import *
 from modules.presets import *
 from modules.overwrites import *
 from modules.chat_func import *
+from modules.config import change_api_url, change_proxy
 from modules.openai_func import get_usage
 
 gr.Chatbot.postprocess = postprocess
