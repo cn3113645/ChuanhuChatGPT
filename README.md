@@ -100,24 +100,23 @@
 
 	<!-- 需要更换示例图片 --></details>
 
-	<details><summary>3. 在文件中设定默认密钥、用户名密码</summary>
+	<details><summary>3. 在文件中设定默认密钥、用户名密码（推荐）</summary>
 
 	这样设置的密钥可以在拉取项目更新之后保留。
 
-	在项目文件夹中新建这两个文件：`api_key.txt` 和 `auth.json`。
-
-	在`api_key.txt`中填写你的API-Key，注意不要填写任何无关内容。
-
-	在`auth.json`中填写你的用户名和密码，支持多用户。格式如下：
+	参照 `config_example.json`，在项目文件夹中新建 `config.json`，在其中填入 API-Key、用户名密码（可选）等设置。用户名密码支持多用户。
 
 	```
 	{
-		"user1": {
-			"username": "用户名",
-			"password": "密码"
-		}
+		"openai_api_key": "sk-xxxxxxxxxxxxxxxxxxxxxxxxx",
+		"users": [
+			["root", "root"]
+		]
 	}
 	```
+
+	* *原本在 `api_key.txt` 和 `auth.json` 中填写相关设置的方法仍然可用，但不再推荐。*
+
 
 	</details>
 
